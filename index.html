@@ -1,174 +1,163 @@
 
-   <p>This is a paragraph explaining the purpose of this page.</p>
-   <a href="https://www.example.com">Visit Example</a>
-</body>
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Web Page</title>
+    <title>Minimalist Cookie</title>
     <style>
-        /* Basic CSS styling */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-            color: #333;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            background: #fafafa;
+            color: #222;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
         }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-        nav a {
-            margin: 0 10px;
-            color: white;
-            text-decoration: none;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        main {
+        
+        .card {
             background: white;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #666;
-        }
-    </style>
-</head>
-<body>
-
-   <img src="C:\Users\Sepacct\Pictures\triplet_figures_suspended_in_t (1).jpeg" alt="Description of image"
-    <!-- Header Section -->
-    <header>
-        <h1>Welcome to My Web Page</h1>
-        <nav>
-            <a href="#about">About</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <section id="about">
-            <h2>About Me</h2>
-            <p>Hello! This is my first HTML web page. I am learning how to create and style web pages using HTML and CSS.</p>
-        </section>
-
-        <section id="gallery">
-            <h2>Gallery</h2>
-            <img src="https://via.placeholder.com/600x300" alt="Sample Image">
-        </section>
-
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>You can reach me at: <a href="mailto:example@email.com">example@email.com</a></p>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        &copy; 2026 My First Web Page
-    </footer>
-
-</body>
-</html>
-
-Got it ✅ — here’s a complete HTML page with JavaScript included.
-This example adds interactive behavior: a button that changes text and background color when clicked.
-
-Html<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML + JavaScript Example</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-            color: #333;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            max-width: 400px;
+            width: 100%;
             text-align: center;
         }
+        
+        h1 {
+            font-weight: 400;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+        }
+        
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        input:focus {
+            border-color: #222;
+        }
+        
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
+            background: #222;
+            color: #fff;
             border: none;
-            border-radius: 5px;
+            padding: 0.9rem 2rem;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.85rem;
             cursor: pointer;
+            transition: transform 0.1s;
+            width: 100%;
         }
-        button:hover {
-            background-color: #45a049;
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        button.secondary {
+            background: transparent;
+            color: #666;
+            border: 1px solid #ddd;
+            margin-top: 0.5rem;
+        }
+        
+        #message {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #666;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        #message.show {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
+    <div class="card">
+        <h1></h1>
+        <input type="text" id="nameInput" placeholder="Enter your name">
+        <button onclick="saveCookie()">Save to Cookie</button>
+        <button class="secondary" onclick="clearCookie()" style="display:none" id="clearBtn">Clear</button>
+        <p id="message"></p>
+    </div>
 
-    <h1>JavaScript in Action</h1>
-    <p id="message">Click the button to change this text and background color.</p>
-    <button onclick="changeContent()">Click Me</button>
-<javascript> C:\Users\Sepacct\Documents\GitHub\page\SCRIPYBUT.js </javascript>
     <script>
-        // Function to change text and background color
-        function changeContent() {
-            const message = document.getElementById("message");
+        // Cookie utilities
+        const setCookie = (name, value, days = 7) => {
+            const maxAge = days * 24 * 60 * 60;
+            document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${maxAge}; path=/; SameSite=Strict`;
+        };
+        
+        const getCookie = (name) => {
+            return document.cookie.split('; ').reduce((acc, curr) => {
+                const [key, val] = curr.split('=');
+                return key === name ? decodeURIComponent(val) : acc;
+            }, '');
+        };
+        
+        const deleteCookie = (name) => {
+            document.cookie = `${name}=; max-age=0; path=/`;
+        };
 
-            // Change the text
-            message.textContent = "You clicked the button! 🎉";
+        // UI Logic
+        const showMessage = (text) => {
+            const el = document.getElementById('message');
+            el.textContent = text;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 3000);
+        };
 
-            // Change background color randomly
-            const colors = ["#ff9999", "#99ff99", "#9999ff", "#ffff99", "#ffcc99"];
-            document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        }
+        const saveCookie = () => {
+            const val = document.getElementById('nameInput').value;
+            if (val) {
+                setCookie('user', val);
+                updateUI(val);
+                showMessage(`Saved: ${val}`);
+            }
+        };
+
+        const clearCookie = () => {
+            deleteCookie('user');
+            document.getElementById('nameInput').value = '';
+            document.getElementById('clearBtn').style.display = 'none';
+            showMessage('Cookie cleared');
+        };
+
+        const updateUI = (name) => {
+            document.getElementById('nameInput').value = name;
+            document.getElementById('clearBtn').style.display = 'block';
+        };
+
+        // Check on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = getCookie('user');
+            if (saved) updateUI(saved);
+        });
     </script>
-
 </body>
 </html>
-
-
-How It Works:
-
-
-HTML:
-
-<p id="message"> holds the text that will change.
-<button onclick="changeContent()"> calls the JavaScript function when clicked.
-
-
-
-CSS:
-
-Styles the page and button for a clean look.
-
-
-
-JavaScript:
-
-document.getElementById("message") selects the paragraph.
-textContent changes the text.
-Math.random() picks a random background color from an array.
-
-
-
-
-💡 If you want, I can make a more advanced version with:
-
-External .js file
-Form validation
-Animations
-
