@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Cookie</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            background: #fafafa;
+            color: #222;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .card {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            font-weight: 400;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+        }
+        
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        input:focus {
+            border-color: #222;
+        }
+        
+        button {
+            background: #222;
+            color: #fff;
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.1s;
+            width: 100%;
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        button.secondary {
+            background: transparent;
+            color: #666;
+            border: 1px solid #ddd;
+            margin-top: 0.5rem;
+        }
+        
+        #message {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #666;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        #message.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1></h1>
+        <input type="text" id="nameInput" placeholder="Enter your name">
+        <button onclick="saveCookie()">Save to Cookie</button>
+        <button class="secondary" onclick="clearCookie()" style="display:none" id="clearBtn">Clear</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // Cookie utilities
+        const setCookie = (name, value, days = 7) => {
+            const maxAge = days * 24 * 60 * 60;
+            document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${maxAge}; path=/; SameSite=Strict`;
+        };
+        
+        const getCookie = (name) => {
+            return document.cookie.split('; ').reduce((acc, curr) => {
+                const [key, val] = curr.split('=');
+                return key === name ? decodeURIComponent(val) : acc;
+            }, '');
+        };
+        
+        const deleteCookie = (name) => {
+            document.cookie = `${name}=; max-age=0; path=/`;
+        };
+
+        // UI Logic
+        const showMessage = (text) => {
+            const el = document.getElementById('message');
+            el.textContent = text;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 3000);
+        };
+
+        const saveCookie = () => {
+            const val = document.getElementById('nameInput').value;
+            if (val) {
+                setCookie('user', val);
+                updateUI(val);
+                showMessage(`Saved: ${val}`);
+            }
+        };
+
+        const clearCookie = () => {
+            deleteCookie('user');
+            document.getElementById('nameInput').value = '';
+            document.getElementById('clearBtn').style.display = 'none';
+            showMessage('Cookie cleared');
+        };
+
+        const updateUI = (name) => {
+            document.getElementById('nameInput').value = name;
+            document.getElementById('clearBtn').style.display = 'block';
+        };
+
+        // Check on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = getCookie('user');
+            if (saved) updateUI(saved);
+        });
+    </script>
+</body>
+</html>
